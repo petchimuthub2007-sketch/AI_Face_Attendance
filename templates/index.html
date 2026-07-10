@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Face Recognition Attendance System</title>
+
+    <style>
+
+        body{
+            background:#f4f6f9;
+            font-family:Arial;
+            text-align:center;
+        }
+
+        .container{
+
+            width:700px;
+            margin:auto;
+            margin-top:70px;
+            background:white;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0px 0px 15px gray;
+
+        }
+
+        h1{
+
+            color:#0d6efd;
+
+        }
+
+        button{
+
+            width:250px;
+            padding:15px;
+            margin:10px;
+            font-size:18px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            background:#0d6efd;
+            color:white;
+
+        }
+
+        button:hover{
+
+            background:#084298;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Face Recognition Attendance System</h1>
+
+<h3>Summer Internship Project</h3>
+<a href="{{ url_for('home') }}">
+    <button>Home</button>
+</a>
+
+<a href="/register">
+    <button>Register Student</button>
+</a>
+
+<br>
+
+<a href="/capture">
+    <button>Capture Face</button>
+</a>
+
+<br><br>
+
+<a href="/train">
+    <button>Train Model</button>
+</a>
+
+<br><br>
+
+<a href="/recognize">
+    <button>Mark Attendance</button>
+</a>
+<a href="/attendance">
+    <button>View Attendance</button>
+</a>
+<a href="/logout">
+    <button>Logout</button>
+</a>

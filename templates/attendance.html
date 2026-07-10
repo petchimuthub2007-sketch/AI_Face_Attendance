@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Records</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        th { background: #2c3e50; color: #fff; }
+        tr:nth-child(even) { background: #f7f7f7; }
+        form.filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; }
+        form.filters div { display: flex; flex-direction: column; }
+        form.filters label { font-size: 12px; margin-bottom: 4px; color: #555; }
+        form.filters input, form.filters select {
+            padding: 6px 8px; border: 1px solid #ccc; border-radius: 4px;
+        }
+        button, .btn {
+            padding: 7px 16px; background: #2c3e50; color: #fff;
+            border: none; border-radius: 4px; cursor: pointer; text-decoration: none;
+        }
+        button:hover, .btn:hover { background: #1a252f; }
+        .no-records { margin-top: 20px; color: #888; }
+    </style>
+</head>
+<body>
+
+    <h2>Attendance Records</h2>
+
+    <form class="filters" method="GET" action="{{ url_for('attendance') }}">
+
+        <div>
+            <label>Register Number</label>
+            <input
+                type="text"
+                name="register_number"
+                placeholder="e.g. 21CS045"
+                value="{{ filters.register_number }}"
+            >
+        </div>
+
+        <div>
+            <label>Department</label>
+            <select name="department">
+                <option value="">All</option>
+                {% for dept in departments %}
+                    <option value="{{ dept }}" {% if filters.department == dept %}selected{% endif %}>
+                        {{ dept }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>From Date</label>
+            <input type="date" name="date_from" value="{{ filters.date_from }}">
+        </div>
+
+        <div>
+            <label>To Date</label>
+            <input type="date" name="date_to" value="{{ filters.date_to }}">
+        </div>
+
+        <div>
+            <button type="submit">Search</button>
+        </div>
+
+        <div>
+            <a class="btn" href="{{ url_for('attendance') }}">Clear</a>
+        </div>
+
+    </form>
+
+    {% if data %}
+    <table>
+        <tr>
+            <th>Register Number</th>
+            <th>Student Name</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.register_number }}</td>
+            <td>{{ row.student_name or "-" }}</td>
+            <td>{{ row.department or "-" }}</td>
+            <td>{{ row.attendance_date }}</td>
+            <td>{{ row.attendance_time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="no-records">No attendance records found for the selected filters.</p>
+    {% endif %}
+
+</body>
+</html>
