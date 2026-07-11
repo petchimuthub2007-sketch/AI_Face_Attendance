@@ -403,7 +403,7 @@
       <div class="action-icon">📷</div>
       <div class="action-title">Capture face</div>
       <div class="action-desc">Register a new face sample.</div>
-      <form action="/capture" method="POST" style="display:flex; flex-direction:column; gap:10px;" onsubmit="handleFormSubmit(event,this,'Opening camera to capture face…')">
+      <form action="{{ url_for('capture_face_page') }}" method="GET" style="display:flex; flex-direction:column; gap:10px;" onsubmit="handleFormSubmit(event,this,'Opening camera to capture face…')">
         <input type="text" name="register_number" class="field" placeholder="Register number" required>
         <button type="submit" class="btn btn-primary">Capture face</button>
       </form>
@@ -442,6 +442,14 @@
       <div class="action-title">Export to Excel</div>
       <div class="action-desc">Download attendance as a spreadsheet.</div>
       <span class="btn btn-amber">Export file</span>
+    </a>
+
+    <a href="/reports" class="action-card" data-name="reports" data-toast="Opening reports…" onclick="handleNav(event,this)">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="action-icon">📊</div>
+      <div class="action-title">Reports</div>
+      <div class="action-desc">Daily / monthly reports, PDF & Excel.</div>
+      <span class="btn btn-ghost">Open reports</span>
     </a>
 
     <a href="/logout" class="action-card" data-name="logout" data-toast="Logging you out…" onclick="handleNav(event,this)">

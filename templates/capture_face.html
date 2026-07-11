@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Capture Face</title>
+</head>
+<body>
+
+    <h2>Capture Face</h2>
+
+    <input type="text" id="register_number"
+           placeholder="Enter Register Number">
+
+    <br><br>
+
+    <video id="video" width="400" height="300" autoplay></video>
+
+    <br><br>
+
+    <button onclick="captureImage()">
+        📷 Capture
+    </button>
+
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <script>
+
+        const video = document.getElementById("video");
+
+        navigator.mediaDevices.getUserMedia({
+            video: true
+        })
+        .then(function(stream){
+            video.srcObject = stream;
+        });
+
+        function captureImage(){
+
+            let register =
+                document.getElementById(
+                    "register_number"
+                ).value;
+
+            if(register == ""){
+                alert("Enter Register Number");
+                return;
+            }
+
+            const canvas =
+                document.getElementById("canvas");
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const ctx =
+                canvas.getContext("2d");
+
+            ctx.drawImage(
+                video,
+                0,
+                0
+            );
+
+            let image =
+                canvas.toDataURL(
+                    "image/jpeg"
+                );
+
+            fetch("/save_face", {
+                method: "POST",
+                headers: {
+                    "Content-Type":
+                    "application/json"
+                },
+                body: JSON.stringify({
+                    register_number: register,
+                    image: image
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+            });
+        }
+
+    </script>
+
+</body>
+</html>
